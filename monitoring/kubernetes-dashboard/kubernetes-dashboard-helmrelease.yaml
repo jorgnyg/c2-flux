@@ -1,0 +1,24 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dashboard
+  namespace: flux-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kubernetes-dashboard
+      sourceRef:
+        kind: HelmRepository
+        name: kubernetes-dashboard
+  targetNamespace: kubernetes-dashboard
+  install:
+    createNamespace: true
+  values:
+    #fullnameOverride: kubernetes-dashboard
+    metrics-server:
+      # Set to false since it already exist
+      enabled: false
+    cert-manager:
+      enabled: false
